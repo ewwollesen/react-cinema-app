@@ -149,23 +149,23 @@ jobs:
                   "type": "section",
                   "fields": [
                     {
-                      "type": "mrkdown",
+                      "type": "mrkdwn",
                       "text": "*Project*:\n${CIRCLE_PROJECT_REPONAME}"
                     },
                     {
-                      "type": "mrkdown",
+                      "type": "mrkdwn",
                       "text": "*Branch*:\n${CIRCLE_BRANCH}"
                     },
                     {
-                      "type": "mrkdown",
+                      "type": "mrkdwn",
                       "text": "*When*:\n${date +'%m/%d/%Y %T'}"
                     },
                     {
-                      "type": "mrkdown",
+                      "type": "mrkdwn",
                       "text": "*Build*:\n${CIRCLE_BUILD_NUM}"
                     },
                     {
-                      "type": "mrkdown",
+                      "type": "mrkdwn",
                       "text": "*Author*:\n${CIRCLE_PROJECT_USERNAME}"
                     }
                   ]
