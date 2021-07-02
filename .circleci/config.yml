@@ -29,7 +29,9 @@ aliases:
   - &install-dependencies
     run:
       name: Install dependencies
-      command: npm install
+      command: |
+        mkdir -p artifacts
+        npm install
   - &save-cache
     save_cache:
       paths:
@@ -62,6 +64,13 @@ jobs:
       - *restore-cache
       - *install-dependencies
       - *save-cache
+      - run:
+          name: Copy Infrastucture Folder
+          command: cp -r infrastructure artifacts/infrastructure
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - artifacts
 
   linting:
     executor: app-executor
@@ -136,7 +145,7 @@ jobs:
           name: Deploy to AWS S3
           command: |
             AWS_BUCKET_NAME = $(cat artifacts/cinema_bucket_name.txt | sed 's/\"//g')
-            echo AWS_BUCKET_NAME
+            echo $AWS_BUCKET_NAME
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete
@@ -160,7 +169,7 @@ jobs:
           name: Deploy to AWS CloudFront
           command: |
             CLOUDFRONT_DISTRIBUTION_ID = $(cat artifacts/cloudfront_distribution_id.txt | sed 's/\"//g')
-            echo AWS_BUCKET_NAME
+            echo $AWS_BUCKET_NAME
             aws configure set preview.cloudfront true
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
@@ -240,7 +249,7 @@ jobs:
       - run:
           name: Terraform Destroy
           command: |
-            cd artifacts/infrastructure/
+            cd infrastructure/
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
             terraform destroy --auto-approve
