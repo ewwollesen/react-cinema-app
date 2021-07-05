@@ -322,16 +322,16 @@ workflows:
                 - develop
                 - staging
                 - master
-      - hold:
-          type: approval
-          requires:
-            - deploy-to-aws-cloudfront
-      - terraform-destroy:
-          requires:
-            - hold
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
+      # - hold:
+      #     type: approval
+      #     requires:
+      #       - deploy-to-aws-cloudfront
+      # - terraform-destroy:
+      #     requires:
+      #       - hold
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop
+      #           - staging
+      #           - master
