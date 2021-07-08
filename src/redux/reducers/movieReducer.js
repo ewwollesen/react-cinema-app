@@ -34,15 +34,15 @@ export default (state = initialState, action) => {
         ...state,
         movieType: action.payload
       };
-    case SEARCH_QUERY:
-      return {
-        ...state,
-        searchQuery: action.payload
-      };
     case SEARCH_RESULT:
       return {
         ...state,
         searchResult: action.payload
+      };
+    case SEARCH_QUERY:
+      return {
+        ...state,
+        searchQuery: action.payload
       };
     default:
       return state;
