@@ -16,6 +16,11 @@ const SlideShow = (props) => {
   let currentSlideIndex = 0;
 
   useEffect(() => {
+    setState({
+      ...state,
+      slideIndex: 0,
+      slideShow: images[0]
+    });
     if (auto) {
       const timeInterval = setInterval(() => {
         autoMoveSlide();
@@ -29,7 +34,7 @@ const SlideShow = (props) => {
     }
 
     // eslint-disable-next-line
-  }, []);
+  }, [images]);
 
   const autoMoveSlide = () => {
     let lastIndex = 0;
@@ -37,8 +42,8 @@ const SlideShow = (props) => {
     currentSlideIndex = lastIndex >= images.length ? 0 : lastIndex;
     setState((prev) => ({
       ...prev,
-      slideShow: images[currentSlideIndex],
-      slideIndex: currentSlideIndex
+      slideIndex: currentSlideIndex,
+      slideShow: images[currentSlideIndex]
     }));
   };
 
@@ -61,8 +66,8 @@ const SlideShow = (props) => {
     setCurrentIndex(index);
     setState((prev) => ({
       ...prev,
-      slideShow: images[index],
-      slideIndex: index
+      slideIndex: index,
+      slideShow: images[index]
     }));
   };
 
@@ -76,7 +81,6 @@ const SlideShow = (props) => {
   };
 
   const Indicators = (props) => {
-    // eslint-disable-next-line react/prop-types
     const { currentSlide } = props;
     const listIndicators = images.map((slide, i) => {
       const btnClasses = i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
